@@ -3,6 +3,7 @@ package telran.multithreadng;
 public class Counter extends Thread {
 	private static int counterResource1 = 0;
 	private static int counterResource2 = 0;
+	private final static Object mutex = new Object();
 	private int nCounts;
 	
 	public Counter(int nCounts) {
@@ -24,12 +25,14 @@ public class Counter extends Thread {
 			count2();
 		}
 	}
-	private void count2() {
+	synchronized static private void count2() {
 		counterResource2++;
 		
 	}
-	private void count1() {
-		counterResource1++;
+	static private void count1() {
+		synchronized (mutex) {
+			counterResource1++;
+		}
 		
 	}
 
