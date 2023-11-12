@@ -27,15 +27,11 @@ public class Counter extends Thread {
 		}
 	}
 	private void count2() {
-		synchronized(counterResource2) {
-			counterResource2.increment();
-		}
+		counterResource2.increment();
 		
 	}
 	private void count1() {
-		synchronized (counterResource1) {
-			counterResource1.increment();
-		}
+		counterResource1.increment();
 		
 	}
 
