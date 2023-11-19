@@ -16,7 +16,6 @@ public class SenderReceiverAppl {
 			new Receiver(messageBox).start();;
 		}
 		sender.join();
-		Thread.sleep(100);
 
 	}
 
