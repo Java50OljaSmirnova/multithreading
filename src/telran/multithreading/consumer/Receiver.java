@@ -4,8 +4,7 @@ import telran.multithreading.messaging.*;
 
 public class Receiver extends Thread {
 	private MessageBox messageBox;
-	private String lastMessage = "finish";
-
+	
 	public Receiver(MessageBox messageBox) {
 		this.messageBox = messageBox;
 		
@@ -13,21 +12,25 @@ public class Receiver extends Thread {
 
 	@Override
 	public void run() {
-		boolean state = true;
-		while(state) {
-			String message = null;
-			try {
-				message = messageBox.take();
-			} catch (InterruptedException e){
-				
+		String message = null;
+		try {
+			while(true) {
+
+
+					message = messageBox.take();
+
+				printMessage(message);
 			}
-			if(message == lastMessage) {
-				state = false;
-			} else {
-			System.out.printf("thread id: %d, message: %s\n", getId(), message);
+		} catch (InterruptedException e) {
+			while((message = messageBox.pull()) != null) {
+				printMessage(message);
 			}
-		}
-		this.interrupt();
+	}
+	}
+
+	private void printMessage(String message) {
+		System.out.printf("thread id: %d, message: %s\n", getId(),message );
+		
 	}
 
 }
